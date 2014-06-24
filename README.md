@@ -1,4 +1,4 @@
-# Rum
+# <span class="mega-octicon octicon-beer"></span> Rum
 
 Removing foo from forum and adding the bar
 
