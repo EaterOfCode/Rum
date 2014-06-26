@@ -5,6 +5,14 @@
 $thirdParty = glob(__DIR__ . '/../third party/*.php');
 foreach($thirdParty as $lib) require_once($lib);
 
+require __DIR__ . '/tpl.php';
+
+$tplEngine = new RumTemplate(realpath(__DIR__ . '/../../views/' . $config['theme'] . '/'));
+
+$tplEngine->name = $config['name'];
+$tplEngine->description = $config['description'];
+
+
 /**
  * Init DB connection
  */
@@ -18,15 +26,27 @@ $users = $db->factory('@{{users}}');
 /**
  * Load models
  */
-include __DIR__ . '/classes/Post.php';
+require __DIR__ . '/models/Post.php';
 
 Post::$posts = $posts;
+Post::$db = $db;
 
-include __DIR__ . '/classes/User.php';
+require __DIR__ . '/models/User.php';
 
 /**
  * load and execute "controller"
  */
-$page = (isset($_GET['page']) && preg_match('/^[a-z-_]+$/'))?$_GET['page']:'index';
+$page = (isset($_GET['page']) && preg_match('/^[a-z-_\/]+$/', $_GET['page']))?$_GET['page']:'index';
 
-include __DIR__ . '/pages/' . $page . '.php';
+$pagePath = __DIR__ . '/pages/' . $page . '.php';
+
+if(file_exists($pagePath)){
+	require $pagePath;
+}else{
+	/**
+	 * Render 404 template when cant find the controller
+	 */
+	header('Status: 404 Not Found');
+	$tplEngine->error = "Can't find page";
+	$tplEngine->render('404');
+}

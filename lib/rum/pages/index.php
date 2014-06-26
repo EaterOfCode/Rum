@@ -1,3 +1,8 @@
 <?php
 
-var_dump(Post::getListById(-1));
+$tplEngine->category = new Post(array(
+	"id"=>-1,
+	"title"=>"Index"
+));
+
+$tplEngine->render('category');
