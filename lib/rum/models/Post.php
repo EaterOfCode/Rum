@@ -25,6 +25,10 @@ class Post {
 		return $this->row->id;	
 	}
 
+	public function getCreator(){
+		return User::getById($this->row->userId);
+	}
+
 	public function getReplies(){
 		return Post::getRepliesById($this->row->id);
 	}

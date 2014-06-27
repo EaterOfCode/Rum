@@ -6,6 +6,21 @@ $thirdParty = glob(__DIR__ . '/../third party/*.php');
 foreach($thirdParty as $lib) require_once($lib);
 
 require __DIR__ . '/tpl.php';
+require __DIR__ . '/utils.php';
+
+/**
+ * Load utils
+ */
+Utils::$config = $config;
+
+/**
+ * Routes
+ */
+Utils::$routes = array(
+	"user"=>array(
+		"pattern"=>"/user/[a-z0-9:username]+"
+	)
+);
 
 $tplEngine = new RumTemplate(realpath(__DIR__ . '/../../views/' . $config['theme'] . '/'));
 
@@ -14,7 +29,7 @@ $tplEngine->description = $config['description'];
 
 
 /**
- * Init DB connection
+ * Init DB connectiong
  */
 $db = new TinyDB($config['db']['dsn'], $config['db']['user'], $config['db']['pass'],array(
 	'prefix'=>$config['db']['prefix']
@@ -36,9 +51,8 @@ require __DIR__ . '/models/User.php';
 /**
  * load and execute "controller"
  */
-$page = (isset($_GET['page']) && preg_match('/^[a-z-_\/]+$/', $_GET['page']))?$_GET['page']:'index';
-
-$pagePath = __DIR__ . '/pages/' . $page . '.php';
+$page = Utils::route();
+$pagePath = __DIR__ . '/pages/' . $page['controller'] . '.php';
 
 if(file_exists($pagePath)){
 	require $pagePath;
