@@ -5,11 +5,11 @@
 			if($post->isCategory()) continue; ?>
 		<div id="post-<?=$post->getId() ?>" class="post <?=($post->isCategory()?'post-sticky':'')?>">
 			<div class="post-text">
-				<?=$parsedown->text($post->post); ?>
+				<?=$this->parsedown->text($post->post); ?>
 			</div>
 			<div class="post-meta">
-				<div class="post-author"><?=$post->getAuthorLink(); ?></div>
-				<div class="post-created"><?=Utils::getRelativeDate($post->getCreated()) ?></div>
+				<div class="post-author"><?=$post->getCreator()->getLink(); ?></div>
+				<div class="post-created"><?=$post->getCreated() ?></div>
 			</div>
 		</div>
 		<?php }

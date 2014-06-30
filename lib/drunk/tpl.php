@@ -4,7 +4,7 @@
  * SORRY I FORGOT THAT INCLUDE DID JUST LIKE EXECUTE IN SCOPE
  */
 
-class RumTemplate {
+class DrunkTemplate {
     protected $templateDir;
     protected $vars = array();
     public function __construct($templateDir) {
@@ -12,7 +12,6 @@ class RumTemplate {
     }
     public function render($templateFile) {
         if (file_exists($this->templateDir .'/' . $templateFile . '.php')) {
-            $parsedown = Parsedown::instance();
             include $this->templateDir . '/' . $templateFile .'.php';
         } else {
             throw new Exception('no template file ' . $templateFile . ' present in directory ' . $this->templateDir);

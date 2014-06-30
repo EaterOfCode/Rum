@@ -1,7 +1,9 @@
 <?php
 
-class Post {
+class Post extends DrunkModel {
 	
+	public static $model;
+
 	private $row;
 	
 	static $posts;
@@ -11,9 +13,9 @@ class Post {
 		if(is_array($id)){
 			$this->row = (object)$id;
 		}else if(is_object($id)){
-
+			$this->row = (object)$id;
 		}else{
-			$this->row = Post::$posts->find($id);
+			$this->row = Post::$model->find($id);
 		}
 	}
 	
@@ -23,6 +25,10 @@ class Post {
 
 	public function getId(){
 		return $this->row->id;	
+	}
+
+	public function getCreated(){
+		return $this->row->created;	
 	}
 
 	public function getCreator(){
@@ -56,18 +62,18 @@ class Post {
 	public static function getRepliesById($id){
 		return array_map(function($row){
 			return new Post($row->getRaw());
-		}, self::$posts->findMany('parentId = ?',array($id)));
+		}, self::$model->findMany('parentId = ?',array($id)));
 	}
 	
 	public static function getListById($id){
 		$query = "SELECT * FROM {{posts}} WHERE parentId = '".intval($id)."' ORDER BY flags LIKE '%C%' DESC, flags LIKE '%S%' DESC, created";
 		return array_map(function($row){
 			return new Post($row);
-		},self::$db->command()->setSql($query)->queryAll());
+		}, Utils::$db->command()->setSql($query)->queryAll());
 	}
 	
 	public static function create($userId, $title, $text, $flags, $parentId){
-		return $posts->insert(array(
+		return self::$model->insert(array(
 			"title"=>$title,
 			"post"=>$text,
 			"flags"=> $flags,
@@ -79,3 +85,5 @@ class Post {
 	
 	
 }
+
+Post::init('posts');

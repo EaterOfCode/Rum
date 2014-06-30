@@ -5,4 +5,6 @@ $tplEngine->category = new Post(array(
 	"title"=>"Index"
 ));
 
+$tplEngine->parsedown = new Parsedown();
+
 $tplEngine->render('category');

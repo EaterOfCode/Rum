@@ -7,6 +7,7 @@ foreach($thirdParty as $lib) require_once($lib);
 
 require __DIR__ . '/tpl.php';
 require __DIR__ . '/utils.php';
+require __DIR__ . '/model.php';
 
 /**
  * Load utils
@@ -16,13 +17,9 @@ Utils::$config = $config;
 /**
  * Routes
  */
-Utils::$routes = array(
-	"user"=>array(
-		"pattern"=>"/user/[a-z0-9:username]+"
-	)
-);
+Utils::$routes = $routes;
 
-$tplEngine = new RumTemplate(realpath(__DIR__ . '/../../views/' . $config['theme'] . '/'));
+$tplEngine = new DrunkTemplate(realpath(__DIR__ . '/../../views/' . $config['theme'] . '/'));
 
 $tplEngine->name = $config['name'];
 $tplEngine->description = $config['description'];
@@ -35,30 +32,25 @@ $db = new TinyDB($config['db']['dsn'], $config['db']['user'], $config['db']['pas
 	'prefix'=>$config['db']['prefix']
 ));
 
-$posts = $db->factory('@{{posts}}');
-$users = $db->factory('@{{users}}');
+Utils::$db = $db;
 
 /**
  * Load models
  */
-require __DIR__ . '/models/Post.php';
-
-Post::$posts = $posts;
-Post::$db = $db;
-
-require __DIR__ . '/models/User.php';
+$models = glob(__DIR__ . '/../../models/*.php');
+foreach($models as $model) require_once($model);
 
 /**
- * load and execute "controller"
+ * load and execute page
  */
 $page = Utils::route();
-$pagePath = __DIR__ . '/pages/' . $page['controller'] . '.php';
+$pagePath = __DIR__ . '/../../pages/' . $page['page'] . '.php';
 
 if(file_exists($pagePath)){
 	require $pagePath;
 }else{
 	/**
-	 * Render 404 template when cant find the controller
+	 * Render 404 template when cant find the page
 	 */
 	header('Status: 404 Not Found');
 	$tplEngine->error = "Can't find page";

@@ -1,9 +1,9 @@
 <?php
 
-class User {
-	
-	static $db;
-	static $users;
+class User extends DrunkModel {
+
+	public static $model;
+
 	static $_usersByName = array();
 	static $_users = array();
 
@@ -15,9 +15,9 @@ class User {
 		}else if(is_object($id)){
 			$this->row = (object) $id;
 		}else if(is_string($id)){
-			$this->row = User::$users->find($id);
+			$this->row = User::$model->find($id);
 		}else{
-			$this->row = User::$users->findOneBy('username',$id);
+			$this->row = User::$model->findOneBy('username',$id);
 		}
 		User::$_users[$this->row->id] = $this;
 		User::$_usersByName[$this->row->username] = $this;
@@ -27,12 +27,16 @@ class User {
 		return $this->row->username;
 	}
 
+	public function getLink(){
+		return  "<a href=\"" . $this->getUrl() . "\">" . htmlspecialchars($this->getUsername()) . "</a>";
+	}
+
 	public function getId(){
 		return $this->row->id;
 	}
 
 	public function getUrl(){
-		return Utils::url(array( "controller" => "user", "username" => $this->getUsername() ));
+		return Utils::build(array( "page" => "user", "params" => array( "username" => $this->getUsername() )));
 	}
 
 	public static function getById($id){
@@ -47,3 +51,5 @@ class User {
 		return new User($id);
 	}
 }
+
+User::init('users');
