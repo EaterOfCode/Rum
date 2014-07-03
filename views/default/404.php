@@ -5,6 +5,6 @@
 	<title>Error | <?=$this->name?></title>
 </head>
 <body>
-	:(
+	<?=$this->error;?>
 </body>
 </html>

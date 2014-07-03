@@ -1,8 +1,9 @@
+
 <?php
 /**
  *	Load third party libs
  */
-$thirdParty = glob(__DIR__ . '/../third party/*.php');
+$thirdParty = array_merge(glob(__DIR__ . '/../third party/*.php'), glob(__DIR__ . '/../../ext/*.php'));
 foreach($thirdParty as $lib) require_once($lib);
 
 require __DIR__ . '/tpl.php';
@@ -18,11 +19,12 @@ Utils::$config = $config;
  * Routes
  */
 Utils::$routes = $routes;
-
+/**
+ * 
+ */
 $tplEngine = new DrunkTemplate(realpath(__DIR__ . '/../../views/' . $config['theme'] . '/'));
 
-$tplEngine->name = $config['name'];
-$tplEngine->description = $config['description'];
+$tplEngine->cfgVars = $config['tplVars'];
 
 
 /**
@@ -44,6 +46,10 @@ foreach($models as $model) require_once($model);
  * load and execute page
  */
 $page = Utils::route();
+
+if(file_exists(__DIR__ . '/../../boot.php')){
+	require __DIR__ . '/../../boot.php';
+}
 $pagePath = __DIR__ . '/../../pages/' . $page['page'] . '.php';
 
 if(file_exists($pagePath)){

@@ -6,8 +6,12 @@
 
 $config = array();
 
-$config['name'] = "My own alcoholic forum";
-$config['description'] = "Anonymous, but not really";
+$tplVars = array();
+
+$tplVars['name'] = "Rum";
+$tplVars['description'] = "Lustig";
+
+$config['tplVars'] = $tplVars;
 
 $config['theme'] = "default";
 
@@ -25,4 +29,4 @@ $config['db'] = array(
  * Get: index.php?path=/user/l33t
  */
 $config['path'] = "get";
-$config['baseUrl'] = '/';
+$config['baseUrl'] = '/rum/';

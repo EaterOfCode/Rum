@@ -1,0 +1,41 @@
+body {
+	background: #ECF0F1;
+	font-family: Arial;
+	margin: 0;
+	padding: 0;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.header {
+	height: 60px;
+	background: #F7CA18;
+	padding: 10px 20px;
+}
+
+.title {
+	font-size: 30px;
+	color: white;
+}
+
+.user {
+	float: right;
+	display: inline-block;
+}
+
+.login {
+	display: inline-block;
+	padding: 10px;
+	transition: background .5s ease;
+}
+
+.login:hover {
+	background: hsl(48, 100%, 44%);
+}
+
+.main {
+	margin: auto;
+	max-width: 900px;
+}

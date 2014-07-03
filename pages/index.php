@@ -7,4 +7,4 @@ $tplEngine->category = new Post(array(
 
 $tplEngine->parsedown = new Parsedown();
 
-$tplEngine->render('category');
+$tplEngine->render('category','main');
