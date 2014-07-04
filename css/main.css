@@ -13,11 +13,12 @@ body {
 	height: 60px;
 	background: #F7CA18;
 	padding: 10px 20px;
+    color: white;
 }
 
 .title {
 	font-size: 30px;
-	color: white;
+    float:left;
 }
 
 .user {
@@ -26,16 +27,70 @@ body {
 }
 
 .login {
+    text-align: right;
 	display: inline-block;
 	padding: 10px;
 	transition: background .5s ease;
+    background: hsla(48, 100%, 44%, 0);
+    position: relative;
 }
 
 .login:hover {
-	background: hsl(48, 100%, 44%);
+	background: hsla(48, 100%, 44%, 1);
+}
+
+.header-middle {
+    margin: auto;
+    max-width: 900px;
 }
 
 .main {
 	margin: auto;
+    padding: 10px 20px;
 	max-width: 900px;
+}
+
+.login-form {
+    position: absolute;
+    width:auto;
+    right:0;
+    padding:10px;
+    transition: all 0.5s ease;
+    opacity: 0;
+    background: hsl(48, 100%, 44%);
+}
+
+.login-form input {
+    border:none;
+    background: #F7CA18;
+    padding:5px;
+    margin: 2px 0;
+}
+
+
+.login-submit {
+    background:  #F7CA18;
+    color:white;
+    border:none;
+    width:100%;
+    padding:5px;
+}
+
+.login-form input::-webkit-input-placeholder
+{
+    color:white
+}
+
+.login-form input::-moz-placeholder {
+    color:white       
+}
+
+.login-form input::-ms-input-placeholder
+{
+    color:white   
+}
+
+.login:hover .login-form {
+    opacity: 1;
+    display:block;
 }

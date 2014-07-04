@@ -26,6 +26,7 @@ $tplEngine = new DrunkTemplate(realpath(__DIR__ . '/../../views/' . $config['the
 
 $tplEngine->cfgVars = $config['tplVars'];
 
+$tplEngine->baseUrl = $config['baseUrl'];
 
 /**
  * Init DB connectiong
