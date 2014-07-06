@@ -15,9 +15,9 @@ class User extends DrunkModel {
 		}else if(is_object($id)){
 			$this->row = (object) $id;
 		}else if(is_string($id)){
-			$this->row = User::$model->find($id);
+			$this->row = (object)User::$model->findOneBy('username',$id)->getRaw();
 		}else{
-			$this->row = User::$model->findOneBy('username',$id);
+			$this->row = User::$model->find($id);
 		}
 		User::$_users[$this->row->id] = $this;
 		User::$_usersByName[$this->row->username] = $this;
@@ -40,6 +40,7 @@ class User extends DrunkModel {
 	}
 
 	public static function getById($id){
+		$id = intval($id);
 		if(isset(User::$_users[$id]))
 			return User::$_users[$id];
 		return new User($id);

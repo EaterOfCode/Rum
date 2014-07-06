@@ -39,14 +39,14 @@ body {
 	background: hsla(48, 100%, 44%, 1);
 }
 
-.header-middle {
-    margin: auto;
+.header-middle { 
+   margin: auto;
     max-width: 900px;
 }
 
 .main {
 	margin: auto;
-    padding: 10px 20px;
+    padding: 30px;
 	max-width: 900px;
 }
 
@@ -93,4 +93,14 @@ body {
 .login:hover .login-form {
     opacity: 1;
     display:block;
+}
+
+.category-list-header {
+    background: #F7CA18;
+    padding: 15px;
+    color: hsl(0, 100%, 100%);
+}
+
+.category {
+    background: white;
 }

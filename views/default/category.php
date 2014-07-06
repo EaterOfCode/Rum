@@ -1,1 +1,1 @@
-<?php $this->posts = $this->category->getReplies();$this->render('bits/list'); ?>
+<?php $this->list = $this->category->getList();$this->render('bits/list'); ?>

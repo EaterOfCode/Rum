@@ -1,19 +1,40 @@
-<div class="post-list">
+<?php
+if(count($this->list['categories']) > 0){
+	 ?>
+<div class="category-list-header">Categories</div>
+<?php } ?>
+<div class="category-list">
 	<?php
-	if(count($this->posts) > 0){
-		foreach ($this->posts as $post) { 
-			if($post->isCategory()) continue; ?>
-		<div id="post-<?=$post->getId() ?>" class="post <?=($post->isCategory()?'post-sticky':'')?>">
-			<div class="post-text">
-				<?=$this->parsedown->text($post->post); ?>
+		foreach ($this->list['categories'] as $post) { ?>
+		<div data-id="<?=$post->getId() ?>" class="category">
+			<div class="category-info">
+				<div class="category-title"><?=$post->getTitle(); ?></div>
+				<div class="category-description"><?=$post->getText(); ?></div>
 			</div>
-			<div class="post-meta">
-				<div class="post-author"><?=$post->getCreator()->getLink(); ?></div>
-				<div class="post-created"><?=$post->getCreated() ?></div>
+			<div class="category-meta">
+				<div class="category-author"><?=$post->getCreator()->getLink(); ?></div>
+				<div class="category-created"><?=$post->getCreated() ?></div>
 			</div>
 		</div>
-		<?php }
-	}else{ ?>
-		<div class="post-list-empty">No posts in this category</div>
-	<?php } ?>
+	</div>
+<?php }
+if(count($this->list['posts']) > 0){?>
+<div class="category-list-header">Posts</div>
+<div class="category-list">
+	<?php
+	if(count($this->list['posts']) > 0){
+		foreach ($this->list['posts'] as $post) { ?>
+		<div data-id="<?=$post->getId() ?>" class="category">
+			<div class="category-text">
+				<div class="category-title"><?=$post->getTitle(); ?></div>
+				<div class="category-description"><?=$post->getText(); ?></div>
+			</div>
+			<div class="category-meta">
+				<div class="category-author"><?=$post->getCreator()->getLink(); ?></div>
+				<div class="category-created"><?=$post->getCreated() ?></div>
+			</div>
+		</div>
+		<?php } 
+	} ?>
 </div>
+<?php } ?>
