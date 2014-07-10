@@ -19,6 +19,16 @@ class Post extends DrunkModel {
 		}
 	}
 
+	public function getLink(){
+		return Utils::build(array(
+			"page"=>"category",
+			"params"=>array(
+				"id"=>$this->row->id,
+				"title"=> preg_replace('~[^a-z0-9]+~i', '-', $this->row->title)
+			)
+		));
+	}
+
 	public function getTitle(){
 		return $this->row->title;
 	}

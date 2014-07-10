@@ -9,6 +9,11 @@ body {
 	box-sizing: border-box;
 }
 
+a {
+    text-decoration: none;
+    color: hsl(48, 93%, 40%);
+}
+
 .header {
 	height: 60px;
 	background: #F7CA18;
@@ -103,4 +108,23 @@ body {
 
 .category {
     background: white;
+    padding: 10px;
+    color: hsl(0, 0%, 0%);
+    display: block;
+}
+
+.category-info {
+    display: inline-block;;
+}
+
+.category:hover {
+    background: hsl(39, 100%, 95%);
+}
+
+.category-title {
+    font-weight: bold;
+}
+
+.category-meta {
+    float:right;
 }

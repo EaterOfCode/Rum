@@ -24,9 +24,9 @@ $config['db'] = array(
 
 /**
  * Options: rewrite, path, get
- * Rewrite: /user/l33t (you need a rewrite to ?path=/user/l33t)
+ * Rewrite: /user/l33t (you need a rewrite to index.php?path=/user/l33t or to just index.php with mod_rewrite)
  * Path: index.php/user/l33t
  * Get: index.php?path=/user/l33t
  */
-$config['path'] = "get";
-$config['baseUrl'] = '/rum/';
+$config['path'] = "rewrite";
+$config['baseUrl'] = '/rum';

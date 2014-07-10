@@ -1,6 +1,6 @@
 <?php
 Class Utils {
-	
+
 	public static $config;
 
 	public static $routes;
@@ -8,7 +8,7 @@ Class Utils {
 	public static $db;
 
 	public static function route(){
-		$path = self::$config['path'] == "path"?$_SERVER['PATH_INFO']:isset($_GET['path'])?$_GET['path']:'/';
+		$path = self::$config['path'] == "path"?$_SERVER['PATH_INFO']:(isset($_SERVER['REDIRECT_URL'])?str_replace(self::$config['baseUrl'],'',$_SERVER['REDIRECT_URL']):(isset($_GET['path'])?$_GET['path']:'/'));
 		if($path == '/' || $path == ''){
 			return array(
 				"page"=>"index",
@@ -27,11 +27,11 @@ Class Utils {
 
 	public static function tryRoute($route, $path){
 		$params = array("path");
-		$reg = str_replace('/','\/',preg_replace_callback('~\[([a-z0-9\.\-_\+]+)\:([a-z0-9\_]+)\]~', function($matches) use(&$params) {
+		$reg = str_replace('/','\/',preg_replace_callback('~\[([a-z0-9\\\.\-_\+]+)\:([a-z0-9\_]+)\]~', function($matches) use(&$params) {
 			$params[] = $matches[2];
 			return '([' . $matches[1] . ']+)';
 		}, $route));
-	    if(preg_match('~^' . $reg . '\/?$~',$path, $matches)){
+	    if(preg_match('~^' . $reg . '\/?$~i',$path, $matches)){
 			return array_combine($params, $matches);
 	    }
 		else{
@@ -41,7 +41,7 @@ Class Utils {
 	}
 
 	public static function buildRoute($route, $params){
-		return preg_replace_callback('~\[([a-z0-9\.\-_\+]+)\:([a-z0-9\_]+)\]~', function($matches) use(&$params) {
+		return preg_replace_callback('~\[([a-z0-9\\\.\-_\+]+)\:([a-z0-9\_]+)\]~', function($matches) use(&$params) {
 			if(isset($params[$matches[2]])){
 				return $params[$matches[2]];
 			}else{
@@ -65,6 +65,11 @@ Class Utils {
 			}
 		}
 		return $url;
+	}
+
+	public static function text($text, $type= 'html'){
+		if($type == 'html') return strip_tags($text);
+		return $text;
 	}
 
 }

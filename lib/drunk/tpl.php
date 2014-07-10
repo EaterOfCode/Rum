@@ -25,6 +25,6 @@ class DrunkTemplate {
         $this->vars[$name] = $value;
     }
     public function __get($name) {
-        return $this->vars[$name];
+        return isset($this->vars[$name])?$this->vars[$name]:null;
     }
 }
