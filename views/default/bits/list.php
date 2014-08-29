@@ -3,7 +3,7 @@ if(count($this->list['categories']) > 0 || count($this->list['posts']) > 0){
 if(count($this->list['categories']) > 0){
 	 ?>
 <div class="category-list-header">Categories</div>
-<?php } ?>
+
 <div class="category-list">
 	<?php
 		foreach ($this->list['categories'] as $post) { ?>
@@ -17,6 +17,8 @@ if(count($this->list['categories']) > 0){
 			<div class="category-description"><?=Utils::text($post->getText()?:"(No description)"); ?></div>
 		</div>
 	</div>
+<?php }  ?>
+</div>
 <?php }
 if(count($this->list['posts']) > 0){?>
 <div class="category-list-header">Posts</div>
@@ -31,7 +33,7 @@ if(count($this->list['posts']) > 0){?>
 			</div>
 			<div class="category-text">
 				<div class="category-title"><?=$post->getTitle(); ?></div>
-				<div class="category-description"><?=Utils::text($post->getText()||"(No description)"); ?> </div>
+				<div class="category-description"><?=Utils::text($post->getText()?:"(No description)"); ?> </div>
 			</div>
 		</div>
 		<?php }

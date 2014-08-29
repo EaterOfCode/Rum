@@ -21,7 +21,7 @@ class Post extends DrunkModel {
 
 	public function getLink(){
 		return Utils::build(array(
-			"page"=>"category",
+			"page"=>($this->isCategory()?"category":'post'),
 			"params"=>array(
 				"id"=>$this->row->id,
 				"title"=> preg_replace('~[^a-z0-9]+~i', '-', $this->row->title)
@@ -81,14 +81,18 @@ class Post extends DrunkModel {
 		return $this->row->text;
 	}
 
-	public static function getRepliesById($id){
-		return array_map(function($row){
-			return new Post($row->getRaw());
-		}, self::$model->findMany("parentId = ? AND flags LIKE '%R%'",array($id)));
+	public function getPost(){
+		return Parsedown::instance()->text($this->getText());
 	}
 
-	public static function getListById($id){
-		$query = "SELECT * FROM {{posts}} WHERE parentId = '".intval($id)."' ORDER BY flags LIKE '%C%' DESC, flags LIKE '%S%' DESC, created";
+	public static function getRepliesById($id,$offset = null){
+		return array_map(function($row){
+			return new Post($row->getRaw());
+		}, self::$model->findMany("parentId = ? AND flags LIKE '%R%'",array($id), 'created', 100, $offset));
+	}
+
+	public static function getListById($id,$offset = null){
+		$query = "SELECT * FROM {{posts}} WHERE parentId = '".intval($id)."' ORDER BY flags LIKE '%C%' DESC, flags LIKE '%S%' DESC, created LIMIT " . (is_null($offset)?'100':$offset . ', 100');
 		$objArray = array_map(function($row){
 			return new Post($row);
 		}, Utils::$db->command()->setSql($query)->queryAll());

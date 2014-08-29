@@ -24,11 +24,13 @@ a {
 .title {
 	font-size: 30px;
     float:left;
+		color:white;
 }
 
 .user {
 	float: right;
 	display: inline-block;
+	position: relative;
 }
 
 .login {
@@ -44,7 +46,7 @@ a {
 	background: hsla(48, 100%, 44%, 1);
 }
 
-.header-middle { 
+.header-middle {
    margin: auto;
     max-width: 900px;
 }
@@ -55,49 +57,27 @@ a {
 	max-width: 900px;
 }
 
-.login-form {
-    position: absolute;
-    width:auto;
-    right:0;
-    padding:10px;
-    transition: all 0.5s ease;
-    opacity: 0;
-    background: hsl(48, 100%, 44%);
-}
 
-.login-form input {
+.user input {
     border:none;
-    background: #F7CA18;
+    background: hsla(47,93%,47%,1);
     padding:5px;
     margin: 2px 0;
 }
 
 
-.login-submit {
-    background:  #F7CA18;
-    color:white;
-    border:none;
-    width:100%;
-    padding:5px;
-}
-
-.login-form input::-webkit-input-placeholder
+.user input::-webkit-input-placeholder
 {
     color:white
 }
 
-.login-form input::-moz-placeholder {
-    color:white       
+.user input::-moz-placeholder {
+    color:white
 }
 
-.login-form input::-ms-input-placeholder
+.user input::-ms-input-placeholder
 {
-    color:white   
-}
-
-.login:hover .login-form {
-    opacity: 1;
-    display:block;
+    color:white
 }
 
 .category-list-header {
@@ -127,4 +107,8 @@ a {
 
 .category-meta {
     float:right;
+}
+
+.category-list + .category-list-header {
+	margin-top: 20px;
 }

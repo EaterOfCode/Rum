@@ -6,5 +6,8 @@ $routes = array(
 	),
 	"category"=>array(
 		"pattern"=>'/category/[0-9:id]/[a-z\-0-9:title]'
+	),
+	"post"=>array(
+		"pattern"=>'/post/[0-9:id]/[a-z\-0-9:title]'
 	)
 );

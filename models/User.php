@@ -15,12 +15,21 @@ class User extends DrunkModel {
 		}else if(is_object($id)){
 			$this->row = (object) $id;
 		}else if(is_string($id)){
-			$this->row = (object)User::$model->findOneBy('username',$id)->getRaw();
+			$this->row = (object)User::$model->findOneBy('username',$id);
+			if(isset($this->row->scalar) && $this->row->scalar == false){
+				$this->row = false;
+				return;
+			}//else
+				//$this->row = $this->row->getRaw();
 		}else{
 			$this->row = User::$model->find($id);
 		}
 		User::$_users[$this->row->id] = $this;
 		User::$_usersByName[$this->row->username] = $this;
+	}
+
+	public function doesExist(){
+		return $this->row !== false;
 	}
 
 	public function getUsername(){
